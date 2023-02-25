@@ -21,6 +21,7 @@ for(const file of commandFiles){
 
 	if('data' in command && 'execute' in command){
 		client.commands.set(command.data.name, command);
+		console.log(`${filePath}`);
 	}
 	else{
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`)
@@ -33,7 +34,7 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
-client.on(Events.InteractionCreate, interaction => {
+client.on(Events.InteractionCreate, async interaction => {
 	if(!interaction.isChatInputCommand()) return;
 	
 	const command = interaction.client.commands.get(interaction.commandName);
@@ -52,34 +53,10 @@ client.on(Events.InteractionCreate, interaction => {
 			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true});
 		}
 		else{
-			await interaction.reply({content: 'There was an error while executing this commdand!', ephemeral = true});
+			await interaction.reply({content: 'There was an error while executing this commdand!', ephemeral: true});
 		}
 	}
 });
 
 // Log in to Discord with your client's token
 client.login(token);
-
-
-/*const { REST, Routes } = require('discord.js');
-
-const commands = [
-	{
-		name: 'ping',
-		description: 'Replies with Pong!',
-	},
-];
-
-const rest = new REST({ version: '10' }).setToken(TOKEN);
-
-(async () => {
-	try {
-		console.log('Started refreshing application (/) commands.');
-
-		await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
-
-		console.log('Successfully reloaded application (/) commands.');
-	} catch (error) {
-		console.error(error);
-	}
-})();*/
