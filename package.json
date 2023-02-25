@@ -1,0 +1,14 @@
+{
+  "name": "lucycavlistr",
+  "version": "1.0.0",
+  "description": "A discord bot that stores a shared list of items that users on a server can collaboratively access and edit.",
+  "main": "lucycavlistr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gwen :)",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.7.1"
+  }
+}
