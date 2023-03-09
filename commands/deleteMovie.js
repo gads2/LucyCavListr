@@ -14,7 +14,7 @@ module.exports = {
         const movieName = interaction.options.getString('movie_name');
         let removed = await JsonHandler.DeleteFromJSON(movieName);
         if(removed){
-            await interaction.reply(movieName + ' successfully removed.');
+            await interaction.reply("'" +movieName + "' successfully removed.");
         }
         else{
             await interaction.reply('That movie was not in the watchlist!');

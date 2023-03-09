@@ -3,19 +3,30 @@ const JsonHandler = require('../functions/jsonHandler.js');
 
 module.exports = {
     data : new SlashCommandBuilder()
-        .setName('watchlist')
+        .setName('test')
         .setDescription('Displays the current LucyCavListr Watchlist - split into pages for ease of use.'),
 
     async execute(interaction){
-        let moviesString = '';
         let currentPage = 1;
         let pageCount = 1;
+        let pageList = [];
+        pageList.push('');
 
         movieList = await JsonHandler.GetListOfMovies();
 
+        let k = 0;
+        let fullPages = 0;
         for (i in movieList){
+            if(k == 25){
+                k = 0;
+                pageList.push('');
+                fullPages++;
+                pageCount++;
+            }
+
             let j = parseInt(i) + 1;
-            moviesString = moviesString.concat("**", j, ".** ", movieList[i], "\n");
+            pageList[fullPages] = pageList[fullPages].concat("**", j, ".** ", movieList[i], "\n");
+            k++;
         }
 
         const row = new ActionRowBuilder()
@@ -36,7 +47,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x084DA5)
             .setTitle("Lucy Cavendish Film Society Film List")
-            .setDescription(moviesString) 
+            .setDescription(pageList[0]) 
             .setFooter({text: "Page "+ currentPage + "/" + pageCount});
 
         await interaction.reply({embeds: [embed], components: [row]})

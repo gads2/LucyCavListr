@@ -14,6 +14,6 @@ module.exports = {
         const movieName = interaction.options.getString('movie_name');
         movieList = await JsonHandler.AppendtoJSON(movieName);
 
-        await interaction.reply(movieName + " added to Watchlist.");
+        await interaction.reply("'" + movieName + "' added to Watchlist.");
     }
 }
