@@ -1,5 +1,6 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const JsonHandler = require('../functions/jsonHandler.js');
+const EmbedHandler = require('../functions/watchListEmbedBuilder');
 
 module.exports = {
     data : new SlashCommandBuilder()
@@ -7,8 +8,6 @@ module.exports = {
         .setDescription('Displays the current LucyCavListr Watchlist - split into pages for ease of use.'),
 
     async execute(interaction){
-        let currentPage = 1;
-        let pageCount = 1;
         let pageList = [];
         pageList.push('');
 
@@ -21,7 +20,6 @@ module.exports = {
                 k = 0;
                 pageList.push('');
                 fullPages++;
-                pageCount++;
             }
 
             let j = parseInt(i) + 1;
@@ -29,26 +27,10 @@ module.exports = {
             k++;
         }
 
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('backwards')
-                    .setLabel('<')
-                    .setStyle(ButtonStyle.Primary)
-                    .setDisabled(true),
-                new ButtonBuilder()
-                    .setCustomId('forwards')
-                    .setLabel('>')
-                    .setStyle(ButtonStyle.Primary)
-                    .setDisabled(pageCount == 1)
-            );
-        
-        
-        const embed = new EmbedBuilder()
-            .setColor(0x084DA5)
-            .setTitle("Lucy Cavendish Film Society Film List")
-            .setDescription(pageList[0]) 
-            .setFooter({text: "Page "+ currentPage + "/" + pageCount});
+        EmbedHandler.InitialiseVariables(pageList);
+
+        const row = EmbedHandler.CreateRow();
+        const embed = EmbedHandler.CreateEmbed();
 
         await interaction.reply({embeds: [embed], components: [row]})
     }

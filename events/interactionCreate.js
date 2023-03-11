@@ -1,4 +1,5 @@
 const {Events} = require('discord.js');
+const EmbedHandler = require('../functions/watchListEmbedBuilder');
 
 module.exports = {
     name : Events.InteractionCreate,
@@ -32,7 +33,14 @@ module.exports = {
 			const {customId} = interaction;
 
 			if(customId == "forwards" || customId == "backwards"){
-				await interaction.reply({content: `cowabunga!`});
+				EmbedHandler.ProgressPage(customId);
+				embed = EmbedHandler.CreateEmbed();
+				row = EmbedHandler.CreateRow();
+
+				const message = interaction.message;
+				message.edit({embeds: [embed], components: [row]}); 
+
+				interaction.deferUpdate();
 			}
 			else{
 				await interaction.reply({content: `Unknown button pressed.`, ephemeral: true});
