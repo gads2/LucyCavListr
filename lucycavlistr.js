@@ -2,17 +2,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
 // Require the necessary discord.js classes
-const { Client, Collection, ActivityType, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds], 
-							presence: {
-								activities: [{
-									name: "'Who framed Roger Rabbit?'",
-									type: ActivityType.Watching
-								}]
-							}});
+const client = new Client({ intents: [GatewayIntentBits.Guilds]});
 
 client.commands = new Collection();
 

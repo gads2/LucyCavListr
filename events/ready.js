@@ -1,10 +1,15 @@
-const {Events} = require('discord.js');
+const {Events, ActivityType} = require('discord.js');
+const JsonHandler = require('../functions/jsonHandler.js');
 
 module.exports = {
     name: Events.ClientReady,
     once: true,
 
-    execute(client){
+    async execute(client){
         console.log(`Ready! Logged in as ${client.user.tag}`);
+
+        film = await JsonHandler.GetCurrentFilm();
+
+        client.user.setActivity("'" + film + "'", {type: ActivityType.Watching});
     },
 };

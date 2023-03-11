@@ -1,9 +1,10 @@
 const {SlashCommandBuilder, ActivityType} = require("discord.js");
+const JsonHandler = require('../functions/jsonHandler.js');
 
 module.exports = {
     data : new SlashCommandBuilder()
-        .setName('status')
-        .setDescription('Sets current movie on bot.')
+        .setName('set_movie')
+        .setDescription('Sets current movie on bot status.')
         .addStringOption(option =>
             option.setName('movie_name')
                 .setDescription('The movie being watched this week.')
@@ -11,15 +12,12 @@ module.exports = {
 
     async execute(interaction){
         
-        interaction.client.user.setPresence({
-            activities: [{
-                name: interaction.options.getString('movie_name'),
-                type: ActivityType.Watching
-            }]
-        })
+        film = interaction.options.getString('movie_name');
 
-        //interaction.client.user.setActivity('Who Framed Roger Rabbit?', {type: 'WATCHING'});
+        interaction.client.user.setActivity("'" + film + "'", {type: ActivityType.Watching});
 
-        await interaction.reply("Status Set.");
+        JsonHandler.SetCurrentFilm(film);
+
+        await interaction.reply({content: "Status Set.", ephemeral :true});
     }
 }

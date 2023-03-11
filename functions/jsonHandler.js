@@ -13,6 +13,36 @@ async function GetListOfMovies(){
     return string;
 }
 
+async function GetCurrentFilm(){
+    let data = await fs.readFile(path)
+        .catch((error) =>{
+            console.log(error);
+            return;
+    });
+    string = JSON.parse(data).currentFilm;
+    return string;
+}
+
+async function SetCurrentFilm(string){
+    let data = await fs.readFile(path)
+        .catch((error) =>{
+            console.log(error);
+            return;
+    });
+
+    json = JSON.parse(data);
+    json.currentFilm = string;
+
+    fs.writeFile(path, JSON.stringify(json, null, 2), (error) => {
+        if (error) {
+          console.log('An error has occurred ', error);
+          return;
+        }
+      });
+      
+      console.log('Data successfully written to file.');
+    }
+
 async function AppendtoJSON(string){
     let data = await fs.readFile(path)
         .catch((error) =>{
@@ -62,7 +92,7 @@ async function DeleteFromJSON(string){
     }
 }
 
-module.exports = {GetListOfMovies, AppendtoJSON, DeleteFromJSON}
+module.exports = {GetListOfMovies, AppendtoJSON, DeleteFromJSON, GetCurrentFilm, SetCurrentFilm}
 
 //TEST FUNCTIONS
 
