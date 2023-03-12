@@ -35,12 +35,17 @@ module.exports = {
 			if(customId == "forwards" || customId == "backwards"){
 				EmbedHandler.ProgressPage(customId);
 				embed = EmbedHandler.CreateEmbed();
-				row = EmbedHandler.CreateRow();
+				if(embed == "outdated instance"){
+					await interaction.reply({content: "This is an outdated instance - try /watchlist again to get a new one! :)", ephemeral: true});
+				}
+				else{
+					row = EmbedHandler.CreateRow();
 
-				const message = interaction.message;
-				message.edit({embeds: [embed], components: [row]}); 
+					const message = interaction.message;
+					message.edit({embeds: [embed], components: [row]}); 
 
-				interaction.deferUpdate();
+					interaction.deferUpdate();
+				}
 			}
 			else{
 				await interaction.reply({content: `Unknown button pressed.`, ephemeral: true});

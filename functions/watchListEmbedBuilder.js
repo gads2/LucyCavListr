@@ -21,6 +21,13 @@ function ProgressPage(string){
 
 function CreateEmbed(){
     pageCount = pageList.length;
+    if(pageCount == 0){
+        return "outdated instance";
+    }
+
+    if(currentPage > pageCount){currentPage = pageCount;}
+    else if(currentPage < 1){currentPage = 1;}
+    
     const embed = new EmbedBuilder()
             .setColor(0x084DA5)
             .setTitle("Lucy Cavendish Film Society Film List")
